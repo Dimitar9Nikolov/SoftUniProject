@@ -1,8 +1,228 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@using SoftUniProject.Data.Models.Enums
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Anywhere Delivery";
+    var user = await UserManager.GetUserAsync(User);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="container">
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4 text-primary">Order Anything from Anywhere</h1>
+                <p class="lead mb-4 text-secondary">
+                    Tired of being limited to a specific list of restaurants or shops? With <strong>Anywhere Delivery</strong>, you can order whatever you need from wherever you want. Our community of delivery partners is ready to help!
+                </p>
+                <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">
+                        <i class="fas fa-shopping-basket me-2"></i>Start Ordering
+                    </a>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block text-center">
+                <i class="fas fa-truck-loading fa-10x text-primary opacity-25"></i>
+            </div>
+        </div>
+        
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-primary bg-gradient text-white fs-2 mb-3 rounded-circle p-3 shadow" style="width: 80px; height: 80px;">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3 class="fs-4 fw-bold text-dark">1. Describe</h3>
+                <p class="text-muted">Tell us what you need and where it can be picked up. No predefined menus, just your needs.</p>
+            </div>
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-success bg-gradient text-white fs-2 mb-3 rounded-circle p-3 shadow" style="width: 80px; height: 80px;">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3 class="fs-4 fw-bold text-dark">2. Connect</h3>
+                <p class="text-muted">A nearby delivery person accepts your request and starts the journey immediately.</p>
+            </div>
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-info bg-gradient text-white fs-2 mb-3 rounded-circle p-3 shadow" style="width: 80px; height: 80px;">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h3 class="fs-4 fw-bold text-dark">3. Receive</h3>
+                <p class="text-muted">Get your items delivered right to your door. Simple, fast, and flexible.</p>
+            </div>
+        </div>
+        
+        <div class="bg-light p-5 rounded-lg shadow-sm mb-5 text-center border">
+            <h2 class="fw-bold mb-3">Want to earn while you move?</h2>
+            <p class="lead mb-4">Join our community as a delivery partner and help people get what they need.</p>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-success btn-lg px-5">Join as Delivery Man</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12 text-center mb-5">
+                <h1 class="display-4 fw-bold">Welcome, @user?.FirstName!</h1>
+                <p class="lead text-muted">Manage your deliveries and orders from one place.</p>
+            </div>
+        </div>
+
+        @if (user?.IsDeliveryMan == true)
+        {
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0"><i class="fas fa-list-ul me-2"></i>Available Orders Near You</h5>
+                        </div>
+                        <div class="card-body">
+                            @{
+                                var availableOrders = ViewBag.AvailableOrders as List<Order>;
+                            }
+                            @if (availableOrders != null && availableOrders.Any())
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Customer</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var order in availableOrders)
+                                            {
+                                                <tr>
+                                                    <td>@order.Description</td>
+                                                    <td><small>@order.PickupAddress</small></td>
+                                                    <td><small>@order.DeliveryAddress</small></td>
+                                                    <td>@order.Customer.FirstName</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-sm btn-outline-success">Accept</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center py-4">
+                                    <i class="fas fa-info-circle fa-3x text-info mb-3"></i>
+                                    <p class="lead">No pending orders available at the moment.</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-tie fa-4x text-primary mb-3"></i>
+                            <h4>Delivery Man Profile</h4>
+                            <p class="text-muted">You are registered as a delivery partner.</p>
+                            <hr>
+                            <div class="d-grid">
+                                <a href="#" class="btn btn-primary mb-2">My Active Deliveries</a>
+                                <a href="#" class="btn btn-outline-secondary">Delivery History</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <i class="fas fa-plus-circle fa-5x text-success mb-3"></i>
+                            <h3>Need something?</h3>
+                            <p class="text-muted">Place a new order and we'll find a delivery person for you.</p>
+                            <a href="#" class="btn btn-success btn-lg mt-3">Create New Order</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-dark text-white py-3">
+                            <h5 class="mb-0"><i class="fas fa-history me-2"></i>My Recent Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            @{
+                                var myOrders = ViewBag.MyOrders as List<Order>;
+                            }
+                            @if (myOrders != null && myOrders.Any())
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var order in myOrders)
+                                            {
+                                                <tr>
+                                                    <td>@order.Description</td>
+                                                    <td>
+                                                        <span class="badge @(order.Status == OrderStatus.Pending ? "bg-warning" : "bg-info")">
+                                                            @order.Status
+                                                        </span>
+                                                    </td>
+                                                    <td>@order.CreatedOn.ToString("MMM dd, HH:mm")</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center py-4">
+                                    <p class="lead">You haven't placed any orders yet.</p>
+                                    <a href="#" class="btn btn-link">Start your first order</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .feature-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+    .feature:hover .feature-icon {
+        transform: scale(1.1);
+    }
+    .btn {
+        border-radius: 8px;
+    }
+    .card {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    .card:hover {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>

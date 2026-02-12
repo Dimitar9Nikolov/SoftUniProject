@@ -1,13 +1,56 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SoftUniProject.Data;
+using SoftUniProject.Data.Models;
+using SoftUniProject.Data.Models.Enums;
 using SoftUniProject.Models;
 
 namespace SoftUniProject.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
+        _context = context;
+        _userManager = userManager;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                if (user.IsDeliveryMan)
+                {
+                    var availableOrders = await _context.Orders
+                        .Where(o => o.Status == OrderStatus.Pending)
+                        .Include(o => o.Customer)
+                        .OrderByDescending(o => o.CreatedOn)
+                        .Take(10)
+                        .ToListAsync();
+                    
+                    ViewBag.AvailableOrders = availableOrders;
+                }
+                else
+                {
+                    var myOrders = await _context.Orders
+                        .Where(o => o.CustomerId == user.Id)
+                        .OrderByDescending(o => o.CreatedOn)
+                        .Take(5)
+                        .ToListAsync();
+                    
+                    ViewBag.MyOrders = myOrders;
+                }
+            }
+        }
+        
         return View();
     }
 
