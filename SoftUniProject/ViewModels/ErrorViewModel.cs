@@ -1,4 +1,4 @@
-namespace SoftUniProject.Models;
+namespace SoftUniProject.ViewModels;
 
 public class ErrorViewModel
 {

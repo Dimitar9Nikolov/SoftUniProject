@@ -1,0 +1,75 @@
+@model SoftUniProject.ViewModels.CreateOrderViewModel
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white p-4 rounded-top-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-plus-circle-dotted fs-1 me-3"></i>
+                        <div>
+                            <h2 class="mb-0 fw-bold">New Delivery</h2>
+                            <p class="mb-0 opacity-75">Fill in the details for your shipment</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4 rounded-3" role="alert"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-semibold">
+                                <i class="bi bi-card-text me-1"></i> What are you sending?
+                            </label>
+                            <input asp-for="Description" class="form-control form-control-lg rounded-3 shadow-sm border-0 bg-light" placeholder="e.g. Documents, Package, Groceries" />
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="PickupAddress" class="form-label fw-semibold">
+                                <i class="bi bi-geo-alt me-1 text-danger"></i> Pickup Address
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0 rounded-start-3 shadow-sm">
+                                    <i class="bi bi-house-door"></i>
+                                </span>
+                                <input asp-for="PickupAddress" class="form-control form-control-lg border-0 bg-light shadow-sm rounded-end-3" placeholder="Full address" />
+                            </div>
+                            <span asp-validation-for="PickupAddress" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="DeliveryAddress" class="form-label fw-semibold">
+                                <i class="bi bi-pin-map me-1 text-success"></i> Delivery Address
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0 rounded-start-3 shadow-sm">
+                                    <i class="bi bi-flag"></i>
+                                </span>
+                                <input asp-for="DeliveryAddress" class="form-control form-control-lg border-0 bg-light shadow-sm rounded-end-3" placeholder="Destination address" />
+                            </div>
+                            <span asp-validation-for="DeliveryAddress" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid gap-3 mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill py-3 shadow">
+                                <i class="bi bi-send-check me-2"></i> Create Order
+                            </button>
+                            <a asp-action="Index" class="btn btn-link text-muted text-decoration-none">
+                                <i class="bi bi-arrow-left me-1"></i> Back to My Orders
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

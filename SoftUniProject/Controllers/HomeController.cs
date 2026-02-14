@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SoftUniProject.Data;
 using SoftUniProject.Data.Models;
 using SoftUniProject.Data.Models.Enums;
-using SoftUniProject.Models;
+using SoftUniProject.ViewModels;
 
 namespace SoftUniProject.Controllers;
 

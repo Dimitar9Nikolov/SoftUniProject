@@ -1,0 +1,172 @@
+@using SoftUniProject.Data.Models.Enums
+@model SoftUniProject.ViewModels.OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Delivery Details";
+}
+
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-6 fw-bold">
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-circle me-3">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+                Delivery #@Model.Id.ToString().Substring(0, 8).ToUpper()
+            </h1>
+        </div>
+        <div class="col-md-4 text-md-end pt-2">
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill me-2">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+            </a>
+            <span class="badge rounded-pill bg-@Model.StatusDisplayClass fs-5 px-4 py-2">
+                @switch (Model.Status)
+                {
+                    case OrderStatus.Pending: <i class="bi bi-clock-history me-1"></i> break;
+                    case OrderStatus.Accepted: <i class="bi bi-check-circle me-1"></i> break;
+                    case OrderStatus.InTransit: <i class="bi bi-truck me-1"></i> break;
+                    case OrderStatus.Delivered: <i class="bi bi-box-fill me-1"></i> break;
+                    case OrderStatus.Cancelled: <i class="bi bi-x-circle me-1"></i> break;
+                }
+                @Model.Status
+            </span>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Order Info -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 border-bottom pb-2">
+                        <i class="bi bi-info-circle text-primary me-2"></i>Shipment Information
+                    </h4>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6">
+                            <div class="text-muted small mb-1">Created On</div>
+                            <div class="fw-semibold"><i class="bi bi-calendar-event me-2 text-primary"></i>@Model.CreatedOn.ToString("MMMM dd, yyyy HH:mm")</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-muted small mb-1">Description</div>
+                            <div class="fw-semibold"><i class="bi bi-card-text me-2 text-primary"></i>@Model.Description</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container">
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0 text-center" style="width: 40px;">
+                                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div class="border-start border-2 border-primary mx-auto my-1" style="height: 50px; width: 0;"></div>
+                            </div>
+                            <div class="ms-3 pt-1">
+                                <div class="text-muted small text-uppercase fw-bold">Pickup Address</div>
+                                <div class="fs-5">@Model.PickupAddress</div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 text-center" style="width: 40px;">
+                                <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-pin-map-fill"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3 pt-1">
+                                <div class="text-muted small text-uppercase fw-bold">Delivery Address</div>
+                                <div class="fs-5">@Model.DeliveryAddress</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Card -->
+            <div class="card border-0 shadow-sm rounded-4 bg-light border-start border-4 border-primary">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Update Status</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        @if (Model.Status == OrderStatus.Accepted)
+                        {
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <input type="hidden" name="status" value="@OrderStatus.InTransit" />
+                                <button type="submit" class="btn btn-primary rounded-pill px-4">
+                                    <i class="bi bi-truck me-1"></i> Start Delivery
+                                </button>
+                            </form>
+                        }
+                        @if (Model.Status == OrderStatus.InTransit)
+                        {
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <input type="hidden" name="status" value="@OrderStatus.Delivered" />
+                                <button type="submit" class="btn btn-success rounded-pill px-4">
+                                    <i class="bi bi-box-fill me-1"></i> Mark as Delivered
+                                </button>
+                            </form>
+                        }
+                        @if (Model.Status != OrderStatus.Delivered && Model.Status != OrderStatus.Cancelled)
+                        {
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <input type="hidden" name="status" value="@OrderStatus.Cancelled" />
+                                <button type="submit" class="btn btn-outline-danger rounded-pill px-4" onclick="return confirm('Are you sure you want to cancel this delivery?')">
+                                    <i class="bi bi-x-circle me-1"></i> Cancel Delivery
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Info -->
+        <div class="col-lg-4">
+            <!-- Price Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 bg-primary text-white">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-wallet2 display-3 mb-3 opacity-50"></i>
+                    <h5 class="text-uppercase opacity-75 mb-1">Your Earnings</h5>
+                    <h2 class="display-5 fw-bold mb-2">$@Model.PriceAmount.ToString("F2")</h2>
+                    <hr class="opacity-25">
+                    <div class="d-flex justify-content-between px-3">
+                        <span><i class="bi bi-speedometer2 me-1"></i> Distance:</span>
+                        <span class="fw-bold">@Model.Distance km</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Card -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white p-4 border-0">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-person-badge text-primary me-2"></i>Customer Details
+                    </h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light p-3 rounded-circle me-3">
+                            <i class="bi bi-person fs-3 text-secondary"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small">Customer Name</div>
+                            <div class="fw-bold fs-5">@Model.CustomerName</div>
+                        </div>
+                    </div>
+                    <a href="tel:@Model.CustomerPhone" class="btn btn-outline-primary w-100 rounded-pill">
+                        <i class="bi bi-telephone-fill me-2"></i> @Model.CustomerPhone
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
