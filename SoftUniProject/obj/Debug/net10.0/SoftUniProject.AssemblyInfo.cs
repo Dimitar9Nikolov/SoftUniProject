@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoftUniProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+92ae6ba395393418e420510fdc079287ee8fb619")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b15d6fd282d31eeded54ec0cddc3b9b9586314c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoftUniProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoftUniProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

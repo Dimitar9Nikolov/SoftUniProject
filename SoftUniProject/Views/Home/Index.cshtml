@@ -67,7 +67,7 @@ else
     <div class="container py-5">
         <div class="row">
             <div class="col-md-12 text-center mb-5">
-                <h1 class="display-4 fw-bold">Welcome, @user?.FirstName!</h1>
+                <h1 class="display-4 fw-bold">Welcome, @user?.FirstName @user?.LastName!</h1>
                 <p class="lead text-muted">Manage your deliveries and orders from one place.</p>
             </div>
         </div>
@@ -104,7 +104,7 @@ else
                                                     <td>@order.Description</td>
                                                     <td><small>@order.PickupAddress</small></td>
                                                     <td><small>@order.DeliveryAddress</small></td>
-                                                    <td>@order.Customer.FirstName</td>
+                                                    <td>@order.Customer.FirstName @order.Customer.LastName</td>
                                                     <td>
                                                         <a href="#" class="btn btn-sm btn-outline-success">Accept</a>
                                                     </td>
