@@ -13,6 +13,7 @@ public interface IOrderService
     Task<IEnumerable<OrderListViewModel>> GetOrdersByCustomerIdAsync(string customerId);
     Task<IEnumerable<OrderListViewModel>> GetPendingOrdersAsync(int count = 10);
     Task<IEnumerable<OrderListViewModel>> GetOrdersByDeliveryManIdAsync(string deliveryManId);
+    Task<IEnumerable<OrderListViewModel>> GetCompletedDeliveriesAsync(string deliveryManId);
     
     // Update
     Task<bool> AcceptOrderAsync(Guid orderId, string deliveryManId);

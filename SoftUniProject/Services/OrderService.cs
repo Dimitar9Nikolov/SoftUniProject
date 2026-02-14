@@ -134,6 +134,27 @@ public class OrderService : IOrderService
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<OrderListViewModel>> GetCompletedDeliveriesAsync(string deliveryManId)
+    {
+        return await _context.Orders
+            .Where(o => o.DeliveryManId == deliveryManId && o.Status == OrderStatus.Delivered)
+            .Include(o => o.Price)
+            .Include(o => o.Customer)
+            .OrderByDescending(o => o.CreatedOn)
+            .Select(o => new OrderListViewModel
+            {
+                Id = o.Id,
+                Description = o.Description,
+                PickupAddress = o.PickupAddress,
+                DeliveryAddress = o.DeliveryAddress,
+                Status = o.Status,
+                CreatedOn = o.CreatedOn,
+                CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
+                PriceAmount = o.Price != null ? o.Price.Amount : 0
+            })
+            .ToListAsync();
+    }
+
     public async Task<bool> AcceptOrderAsync(Guid orderId, string deliveryManId)
     {
         var order = await _context.Orders.FindAsync(orderId);

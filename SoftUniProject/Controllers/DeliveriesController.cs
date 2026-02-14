@@ -65,6 +65,24 @@ public class DeliveriesController : Controller
         return View(orders);
     }
 
+    public async Task<IActionResult> Earnings()
+    {
+        if (!await IsUserDeliveryMan()) return Forbid();
+
+        var userId = _userManager.GetUserId(User);
+        if (userId == null) return Challenge();
+
+        var completedDeliveries = await _orderService.GetCompletedDeliveriesAsync(userId);
+        
+        var viewModel = new EarningsViewModel
+        {
+            CompletedDeliveries = completedDeliveries,
+            TotalEarnings = completedDeliveries.Sum(o => o.PriceAmount)
+        };
+
+        return View(viewModel);
+    }
+
     public async Task<IActionResult> Details(Guid id)
     {
         if (!await IsUserDeliveryMan()) return Forbid();

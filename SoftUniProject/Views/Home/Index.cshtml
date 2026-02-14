@@ -106,7 +106,9 @@ else
                                                     <td><small>@order.DeliveryAddress</small></td>
                                                     <td>@order.Customer.FirstName @order.Customer.LastName</td>
                                                     <td>
-                                                        <a href="#" class="btn btn-sm btn-outline-success">Accept</a>
+                                                        <form asp-controller="Deliveries" asp-action="Accept" asp-route-id="@order.Id" method="post">
+                                                            <button type="submit" class="btn btn-sm btn-outline-success">Accept</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             }
@@ -131,9 +133,16 @@ else
                             <h4>Delivery Man Profile</h4>
                             <p class="text-muted">You are registered as a delivery partner.</p>
                             <hr>
-                            <div class="d-grid">
-                                <a href="#" class="btn btn-primary mb-2">My Active Deliveries</a>
-                                <a href="#" class="btn btn-outline-secondary">Delivery History</a>
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Deliveries" asp-action="Index" class="btn btn-primary">
+                                    <i class="bi bi-truck me-1"></i> My Deliveries
+                                </a>
+                                <a asp-controller="Deliveries" asp-action="Earnings" class="btn btn-outline-success">
+                                    <i class="bi bi-wallet2 me-1"></i> My Earnings
+                                </a>
+                                <a asp-controller="Deliveries" asp-action="Available" class="btn btn-outline-secondary">
+                                    <i class="bi bi-search me-1"></i> Find More Orders
+                                </a>
                             </div>
                         </div>
                     </div>
