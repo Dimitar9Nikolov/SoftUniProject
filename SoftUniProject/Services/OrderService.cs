@@ -155,6 +155,17 @@ public class OrderService : IOrderService
             .ToListAsync();
     }
 
+    public async Task<int> GetActiveDeliveryMenCountAsync()
+    {
+        var oneHourAgo = DateTime.UtcNow.AddHours(-1);
+        
+        return await _context.Orders
+            .Where(o => o.AcceptedOn >= oneHourAgo && o.DeliveryManId != null)
+            .Select(o => o.DeliveryManId)
+            .Distinct()
+            .CountAsync();
+    }
+
     public async Task<bool> AcceptOrderAsync(Guid orderId, string deliveryManId)
     {
         var order = await _context.Orders.FindAsync(orderId);
@@ -164,6 +175,7 @@ public class OrderService : IOrderService
 
         order.DeliveryManId = deliveryManId;
         order.Status = OrderStatus.Accepted;
+        order.AcceptedOn = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
         return true;

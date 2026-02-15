@@ -62,3 +62,15 @@ manage their active tasks, and track their earnings.
 The application doesn't require a real email or phone number at the current version.
 Registration and login can be done with any random email and phone number that matches the
 pattern of an email and phone.
+
+### Test Accounts (Development Mode)
+When running in Development mode, the application automatically seeds the following test accounts with example orders:
+
+#### Customer Accounts
+- **Email**: `customer1@test.com` | **Password**: `Test123!`
+- **Email**: `customer2@test.com` | **Password**: `Test123!`
+- **Email**: `customer3@test.com` | **Password**: `Test123!`
+
+#### Delivery Man Accounts
+- **Email**: `delivery1@test.com` | **Password**: `Test123!`
+- **Email**: `delivery2@test.com` | **Password**: `Test123!`

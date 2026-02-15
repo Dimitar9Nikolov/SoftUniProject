@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SoftUniProject.Data;
 using SoftUniProject.Data.Models;
 using SoftUniProject.Data.Models.Enums;
+using SoftUniProject.Services;
 using SoftUniProject.ViewModels;
 
 namespace SoftUniProject.Controllers;
@@ -13,15 +14,19 @@ public class HomeController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IOrderService _orderService;
 
-    public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IOrderService orderService)
     {
         _context = context;
         _userManager = userManager;
+        _orderService = orderService;
     }
 
     public async Task<IActionResult> Index()
     {
+        ViewBag.ActiveDeliveryMenCount = await _orderService.GetActiveDeliveryMenCountAsync();
+
         if (User.Identity?.IsAuthenticated == true)
         {
             var user = await _userManager.GetUserAsync(User);

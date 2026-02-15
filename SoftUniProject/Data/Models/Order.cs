@@ -22,6 +22,7 @@ public sealed class Order
     public string DeliveryAddress { get; set; } = null!;
 
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+    public DateTime? AcceptedOn { get; set; }
 
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
 

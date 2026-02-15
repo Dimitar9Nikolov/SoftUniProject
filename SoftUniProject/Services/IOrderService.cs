@@ -14,6 +14,7 @@ public interface IOrderService
     Task<IEnumerable<OrderListViewModel>> GetPendingOrdersAsync(int count = 10);
     Task<IEnumerable<OrderListViewModel>> GetOrdersByDeliveryManIdAsync(string deliveryManId);
     Task<IEnumerable<OrderListViewModel>> GetCompletedDeliveriesAsync(string deliveryManId);
+    Task<int> GetActiveDeliveryMenCountAsync();
     
     // Update
     Task<bool> AcceptOrderAsync(Guid orderId, string deliveryManId);
