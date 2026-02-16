@@ -21,6 +21,8 @@ public class OrderListViewModel
     public decimal PriceAmount { get; set; }
 
     public bool RequiresPayment { get; set; }
+    
+    public decimal? EstimatedPickupPrice { get; set; }
 
     public string FormattedCreatedOn => CreatedOn.ToString("MMM dd, HH:mm");
 

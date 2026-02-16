@@ -1,4 +1,5 @@
 @using SoftUniProject.Data.Models.Enums
+@using SoftUniProject.Data.Models
 @model IEnumerable<SoftUniProject.ViewModels.OrderListViewModel>
 
 @{
@@ -63,12 +64,31 @@
                             </div>
 
                             <div class="d-flex align-items-center mb-3">
+                                <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-3">
+                                    <i class="bi bi-wallet2 text-warning"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Pickup Payment</div>
+                                    <div class="fw-bold">
+                                        @if (order.RequiresPayment)
+                                        {
+                                            <span class="text-danger">€@(order.EstimatedPickupPrice?.ToString("F2") ?? "0.00")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-success">Not required</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3">
                                 <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
-                                    <i class="bi bi-cash text-primary"></i>
+                                    <i class="bi bi-cash-coin text-primary"></i>
                                 </div>
                                 <div>
                                     <div class="text-muted small">Potential Earnings</div>
-                                    <div class="fw-bold">@order.FormattedPrice</div>
+                                    <div class="fw-bold text-primary">@order.FormattedPrice</div>
                                 </div>
                             </div>
                         </div>

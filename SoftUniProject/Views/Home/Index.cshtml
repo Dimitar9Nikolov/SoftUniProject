@@ -103,6 +103,7 @@ else
                                                 <th>From</th>
                                                 <th>To</th>
                                                 <th>Customer</th>
+                                                <th>Pay at pickup</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -114,6 +115,15 @@ else
                                                     <td><small>@order.PickupAddress</small></td>
                                                     <td><small>@order.DeliveryAddress</small></td>
                                                     <td>@order.Customer.FirstName @order.Customer.LastName</td>
+                                                    <td>@if (order.RequiresPayment)
+                                                        {
+                                                             @order.EstimatedPickupPrice;
+                                                        }
+                                                        else
+                                                        {
+                                                            @:No payment required
+                                                        }
+                                                        </td>
                                                     <td>
                                                         <form asp-controller="Deliveries" asp-action="Accept" asp-route-id="@order.Id" method="post">
                                                             <button type="submit" class="btn btn-sm btn-outline-success">Accept</button>

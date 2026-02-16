@@ -116,7 +116,8 @@ public class OrderService : IOrderService
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
                 PriceAmount = o.Price != null ? o.Price.Amount : 0,
-                RequiresPayment = o.RequiresPayment
+                RequiresPayment = o.RequiresPayment,
+                EstimatedPickupPrice = o.EstimatedPickupPrice
             })
             .ToListAsync();
     }
@@ -138,7 +139,8 @@ public class OrderService : IOrderService
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
                 PriceAmount = o.Price != null ? o.Price.Amount : 0,
-                RequiresPayment = o.RequiresPayment
+                RequiresPayment = o.RequiresPayment,
+                EstimatedPickupPrice = o.EstimatedPickupPrice
             })
             .ToListAsync();
     }
@@ -160,7 +162,8 @@ public class OrderService : IOrderService
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
                 PriceAmount = o.Price != null ? o.Price.Amount : 0,
-                RequiresPayment = o.RequiresPayment
+                RequiresPayment = o.RequiresPayment,
+                EstimatedPickupPrice = o.EstimatedPickupPrice
             })
             .ToListAsync();
     }

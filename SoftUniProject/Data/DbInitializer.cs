@@ -54,6 +54,8 @@ public static class DbInitializer
                         DeliveryAddress = "456 Home Ave",
                         Status = OrderStatus.Pending,
                         CustomerId = customer1.Id,
+                        RequiresPayment = true,
+                        EstimatedPickupPrice = 45.20m,
                         Price = new Price { Amount = 15.50m, Distance = 3.2 }
                     },
                     new Order
@@ -63,6 +65,8 @@ public static class DbInitializer
                         DeliveryAddress = "456 Home Ave",
                         Status = OrderStatus.Pending,
                         CustomerId = customer1.Id,
+                        RequiresPayment = true,
+                        EstimatedPickupPrice = 22.50m,
                         Price = new Price { Amount = 8.00m, Distance = 1.5 }
                     },
                     new Order
@@ -72,6 +76,7 @@ public static class DbInitializer
                         DeliveryAddress = "101 Work Blvd",
                         Status = OrderStatus.Pending,
                         CustomerId = customer2.Id,
+                        RequiresPayment = false,
                         Price = new Price { Amount = 25.00m, Distance = 12.0 }
                     },
                     new Order
@@ -83,6 +88,8 @@ public static class DbInitializer
                         CustomerId = customer2.Id,
                         DeliveryManId = delivery1.Id,
                         AcceptedOn = DateTime.UtcNow.AddMinutes(-15),
+                        RequiresPayment = true,
+                        EstimatedPickupPrice = 35.00m,
                         Price = new Price { Amount = 12.00m, Distance = 5.5 }
                     },
                     new Order
@@ -94,6 +101,7 @@ public static class DbInitializer
                         CustomerId = customer2.Id,
                         DeliveryManId = delivery1.Id,
                         AcceptedOn = DateTime.UtcNow.AddMinutes(-45),
+                        RequiresPayment = false,
                         Price = new Price { Amount = 10.00m, Distance = 2.8 }
                     }
                 };

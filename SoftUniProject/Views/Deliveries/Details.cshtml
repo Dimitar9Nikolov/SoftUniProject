@@ -145,6 +145,23 @@
                 </div>
             </div>
 
+            <!-- Payment at Pickup Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 @(Model.RequiresPayment ? "bg-warning" : "bg-success") text-white">
+                <div class="card-body p-4 text-center">
+                    <i class="bi @(Model.RequiresPayment ? "bi-cash-stack" : "bi-check-circle") display-4 mb-3 opacity-50"></i>
+                    <h5 class="text-uppercase opacity-75 mb-1">Pickup Payment</h5>
+                    @if (Model.RequiresPayment)
+                    {
+                        <h2 class="display-6 fw-bold mb-0">€@(Model.EstimatedPickupPrice?.ToString("F2") ?? "0.00")</h2>
+                        <p class="small mb-0 opacity-75 mt-2">Required at pickup point</p>
+                    }
+                    else
+                    {
+                        <h4 class="fw-bold mb-0">No Payment Required</h4>
+                    }
+                </div>
+            </div>
+
             <!-- Customer Card -->
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                 <div class="card-header bg-white p-4 border-0">
