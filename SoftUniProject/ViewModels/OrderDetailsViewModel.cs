@@ -28,6 +28,12 @@ public class OrderDetailsViewModel
 
     public double Distance { get; set; }
 
+    public bool RequiresPayment { get; set; }
+
+    public decimal? EstimatedPickupPrice { get; set; }
+
+    public PaymentMethod PaymentMethod { get; set; }
+
     public string StatusDisplayClass => Status switch
     {
         OrderStatus.Pending => "warning",

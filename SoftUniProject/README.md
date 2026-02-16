@@ -37,7 +37,7 @@ manage their active tasks, and track their earnings.
 ### Installation
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Dimitar9Nikolov/SoftUniProject.git>
    ```
 2. **Configure the database**:
    Update the connection string in `appsettings.json` if necessary.

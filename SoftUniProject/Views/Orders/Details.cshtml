@@ -105,13 +105,61 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4 bg-primary text-white">
                 <div class="card-body p-4 text-center">
                     <i class="bi bi-wallet2 display-3 mb-3 opacity-50"></i>
-                    <h5 class="text-uppercase opacity-75 mb-1">Total Price</h5>
-                    <h2 class="display-5 fw-bold mb-2">$@Model.PriceAmount.ToString("F2")</h2>
+                    <h5 class="text-uppercase opacity-75 mb-1">Delivery Fee</h5>
+                    <h2 class="display-5 fw-bold mb-2">€@Model.PriceAmount.ToString("F2")</h2>
                     <hr class="opacity-25">
                     <div class="d-flex justify-content-between px-3">
                         <span><i class="bi bi-speedometer2 me-1"></i> Distance:</span>
                         <span class="fw-bold">@Model.Distance km</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- Payment Details Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                <div class="card-header bg-white p-4 border-0">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-credit-card text-primary me-2"></i>Payment Details
+                    </h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="bg-light p-3 rounded-3 mb-3">
+                        <div class="text-muted small mb-1 text-uppercase fw-bold">Method</div>
+                        <div class="d-flex align-items-center">
+                            @if (Model.PaymentMethod == PaymentMethod.CashOnDelivery)
+                            {
+                                <i class="bi bi-cash-stack text-success fs-4 me-2"></i>
+                                <span class="fw-bold">Cash / Pay at Delivery</span>
+                            }
+                            else
+                            {
+                                <i class="bi bi-credit-card-2-back text-primary fs-4 me-2"></i>
+                                <span class="fw-bold">Card (Prepaid)</span>
+                            }
+                        </div>
+                    </div>
+
+                    @if (Model.RequiresPayment)
+                    {
+                        <div class="bg-warning bg-opacity-10 border border-warning border-opacity-25 p-3 rounded-3">
+                            <div class="text-muted small mb-1 text-uppercase fw-bold text-warning-emphasis">Payment at Pickup Required</div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-bold fs-5 text-warning-emphasis">€@Model.EstimatedPickupPrice?.ToString("F2")</span>
+                                <i class="bi bi-exclamation-triangle-fill text-warning fs-4"></i>
+                            </div>
+                            <div class="small text-muted mt-1">Delivery man must pay the merchant this amount upon pickup.</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="bg-success bg-opacity-10 border border-success border-opacity-25 p-3 rounded-3">
+                            <div class="text-muted small mb-1 text-uppercase fw-bold text-success-emphasis">No Payment at Pickup</div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+                                <span class="fw-semibold text-success-emphasis">Items are already paid</span>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
 

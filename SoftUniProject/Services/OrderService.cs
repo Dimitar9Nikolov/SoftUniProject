@@ -26,6 +26,9 @@ public class OrderService : IOrderService
             DeliveryAddress = model.DeliveryAddress,
             CustomerId = customerId,
             Status = OrderStatus.Pending,
+            RequiresPayment = model.RequiresPayment,
+            EstimatedPickupPrice = model.RequiresPayment ? model.EstimatedPickupPrice : null,
+            PaymentMethod = model.PaymentMethod,
             CreatedOn = DateTime.UtcNow
         };
 
@@ -69,7 +72,10 @@ public class OrderService : IOrderService
                     : null,
                 DeliveryManPhone = o.DeliveryMan != null ? o.DeliveryMan.PhoneNumber : null,
                 PriceAmount = o.Price != null ? o.Price.Amount : 0,
-                Distance = o.Price != null ? o.Price.Distance : 0
+                Distance = o.Price != null ? o.Price.Distance : 0,
+                RequiresPayment = o.RequiresPayment,
+                EstimatedPickupPrice = o.EstimatedPickupPrice,
+                PaymentMethod = o.PaymentMethod
             })
             .FirstOrDefaultAsync();
     }
@@ -86,7 +92,8 @@ public class OrderService : IOrderService
                 Description = o.Description,
                 Status = o.Status,
                 CreatedOn = o.CreatedOn,
-                PriceAmount = o.Price != null ? o.Price.Amount : 0
+                PriceAmount = o.Price != null ? o.Price.Amount : 0,
+                RequiresPayment = o.RequiresPayment
             })
             .ToListAsync();
     }
@@ -108,7 +115,8 @@ public class OrderService : IOrderService
                 Status = o.Status,
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
-                PriceAmount = o.Price != null ? o.Price.Amount : 0
+                PriceAmount = o.Price != null ? o.Price.Amount : 0,
+                RequiresPayment = o.RequiresPayment
             })
             .ToListAsync();
     }
@@ -129,7 +137,8 @@ public class OrderService : IOrderService
                 Status = o.Status,
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
-                PriceAmount = o.Price != null ? o.Price.Amount : 0
+                PriceAmount = o.Price != null ? o.Price.Amount : 0,
+                RequiresPayment = o.RequiresPayment
             })
             .ToListAsync();
     }
@@ -150,7 +159,8 @@ public class OrderService : IOrderService
                 Status = o.Status,
                 CreatedOn = o.CreatedOn,
                 CustomerName = $"{o.Customer.FirstName} {o.Customer.LastName}",
-                PriceAmount = o.Price != null ? o.Price.Amount : 0
+                PriceAmount = o.Price != null ? o.Price.Amount : 0,
+                RequiresPayment = o.RequiresPayment
             })
             .ToListAsync();
     }

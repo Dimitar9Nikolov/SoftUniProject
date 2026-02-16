@@ -20,9 +20,11 @@ public class OrderListViewModel
 
     public decimal PriceAmount { get; set; }
 
+    public bool RequiresPayment { get; set; }
+
     public string FormattedCreatedOn => CreatedOn.ToString("MMM dd, HH:mm");
 
-    public string FormattedPrice => $"${PriceAmount:F2}";
+    public string FormattedPrice => $"€{PriceAmount:F2}";
 
     public string StatusDisplayClass => Status switch
     {

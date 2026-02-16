@@ -2,6 +2,77 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-5">
+                        <i class="bi bi-shield-lock-fill text-primary display-1 mb-3"></i>
+                        <h1 class="fw-bold">@ViewData["Title"]</h1>
+                        <p class="text-muted">Last updated: February 15, 2026</p>
+                    </div>
+
+                    <div class="privacy-content">
+                        <section class="mb-5">
+                            <h3 class="fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Introduction</h3>
+                            <p>Welcome to AnywhereDelivery. We value your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+                        </section>
+
+                        <section class="mb-5">
+                            <h3 class="fw-bold mb-3"><i class="bi bi-collection me-2"></i>The Data We Collect</h3>
+                            <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
+                            <ul>
+                                <li><strong>Identity Data:</strong> includes first name, last name, and username.</li>
+                                <li><strong>Contact Data:</strong> includes email address and telephone numbers.</li>
+                                <li><strong>Transaction Data:</strong> includes details about payments to and from you and other details of products and services you have purchased from us or deliveries you have fulfilled.</li>
+                                <li><strong>Technical Data:</strong> includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location.</li>
+                            </ul>
+                        </section>
+
+                        <section class="mb-5">
+                            <h3 class="fw-bold mb-3"><i class="bi bi-eye me-2"></i>How We Use Your Data</h3>
+                            <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
+                            <ul>
+                                <li>To register you as a new customer or delivery partner.</li>
+                                <li>To process and deliver your orders.</li>
+                                <li>To manage payments, fees and charges.</li>
+                                <li>To manage our relationship with you which will include notifying you about changes to our terms or privacy policy.</li>
+                            </ul>
+                        </section>
+
+                        <section class="mb-5">
+                            <h3 class="fw-bold mb-3"><i class="bi bi-shield-check me-2"></i>Data Security</h3>
+                            <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.</p>
+                        </section>
+
+                        <section class="mb-4">
+                            <h3 class="fw-bold mb-3"><i class="bi bi-envelope-at me-2"></i>Contact Us</h3>
+                            <p>If you have any questions about this privacy policy or our privacy practices, please contact our data privacy manager in the following ways:</p>
+                            <p class="mb-0"><strong>Email address:</strong> privacy@anywheredelivery.com</p>
+                            <p><strong>Postal address:</strong> 123 Delivery St, Sofia, Bulgaria</p>
+                        </section>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary px-4 py-2 rounded-pill">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .privacy-content section h3 {
+        color: #0d6efd;
+    }
+    .privacy-content ul li {
+        margin-bottom: 0.5rem;
+    }
+</style>

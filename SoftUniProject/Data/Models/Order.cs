@@ -26,6 +26,13 @@ public sealed class Order
 
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
+    public bool RequiresPayment { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal? EstimatedPickupPrice { get; set; }
+
+    public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.CashOnDelivery;
+
     [Required]
     [MaxLength(450)]
     public string CustomerId { get; set; } = null!;
